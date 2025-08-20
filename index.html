@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Garbage Reporter</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+
+<!-- ===== Login Page (kept professional) ===== -->
+<div id="login-page">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1 class="login-title">Welcome Back</h1>
+      <p class="login-subtitle">Sign in to continue</p>
+      <form onsubmit="login(); return false;">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required/>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required/>
+        </div>
+        <button type="submit">Login</button>
+        <p id="login-error" class="error"></p>
+      </form>
+      <div class="extra-links">
+        <a href="#">Forgot Password?</a>
+        <a href="#">Create Account</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Map Reporting Page (after login) ===== -->
+<div id="map-page" class="hidden">
+  <header class="app-header">
+    <h1>Garbage Reporter</h1>
+    <div class="header-right">
+      <span id="user-email" class="muted"></span>
+      <button class="btn-outlined" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="map-card">
+      <div class="map-toolbar">
+        <button id="btnUseLocation" class="btn-outlined" type="button">Use My Location</button>
+        <button id="btnClearPin" class="btn-outlined" type="button">Clear Pin</button>
+        <div class="coord-line">
+          <span id="latlng">Lat: — , Lng: —</span>
+        </div>
+      </div>
+      <div id="map"></div>
+      <div class="address-line">
+        <strong>Address:</strong>
+        <span id="addressText" title="">—</span>
+      </div>
+    </section>
+
+    <section class="form-card">
+      <form id="report-form">
+        <div class="form-row">
+          <label for="issue">Issue Type</label>
+          <select id="issue" required>
+            <option value="Overflowing bin">Overflowing bin</option>
+            <option value="No garbage collection">No garbage collection</option>
+            <option value="Illegal dumping">Illegal dumping</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="notes">Notes</label>
+          <textarea id="notes" rows="4" placeholder="Add details... (e.g., since when, nearby landmarks)"></textarea>
+        </div>
+
+       <div class="form-row">
+  <label>Photo / Camera (optional)</label>
+  <div class="photo-row">
+    <!-- Upload from gallery -->
+    <input type="file" id="photo" accept="image/*"/>
+
+    <!-- Live camera -->
+    <div class="camera-box">
+      <video id="cameraStream" autoplay playsinline></video>
+      <button type="button" id="btnCapture">📸 Capture</button>
+      <canvas id="cameraCanvas" class="hidden"></canvas>
+      <img id="capturedImage" class="preview hidden" alt="Captured photo"/>
+    </div>
+  </div>
+</div>
+
+        <button type="submit" class="btn-primary">Submit Report</button>
+        <p class="hint">Tip: Click the map to drop a pin; you can drag the pin to fine-tune.</p>
+      </form>
+
+      <div class="output-box">
+        <h3>Submitted Payload</h3>
+        <pre id="output">—</pre>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
